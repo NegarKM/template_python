@@ -1,0 +1,14 @@
+Version GET endpoint retrieves current build version
+---
+tags:
+  - Version
+responses:
+  200:
+    description: Current build version
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            build_version:
+              type: string
