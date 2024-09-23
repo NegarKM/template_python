@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION=3.11.4
-FROM python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim AS serve
 
 COPY Pipfile* /app/
 
@@ -37,4 +37,3 @@ EXPOSE 5000
 ENTRYPOINT ["pipenv", "run", "gunicorn"]
 
 CMD [ "-c", "/app/src/api_service/app/gunicorn.conf.py", "src.api_service.app.__init__:application" ]
-#CMD ["/bin/bash"]
