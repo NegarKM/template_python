@@ -4,7 +4,7 @@ from urllib.parse import quote_plus
 
 
 class AppConfig(object):
-    ENABLED: Final = True if os.environ.get("ENABLED") == "True" else False
+    TEST_MODE: Final = True if os.environ.get("TEST_MODE") == "True" else False
     BUILD_VERSION: Final = os.environ.get("BUILD_VERSION")
 
 
@@ -18,4 +18,7 @@ class _DBConfig(object):
 
 
 class DBConfig(object):
-    SQLALCHEMY_DATABASE_URI = f"{_DBConfig.db_driver}://{_DBConfig.db_user}:{_DBConfig.db_password}@{_DBConfig.db_host}:{_DBConfig.db_port}/{_DBConfig.db_name}?charset=utf8mb4"
+    if AppConfig.TEST_MODE:
+        SQLALCHEMY_DATABASE_URI = "sqlite://"
+    else:
+        SQLALCHEMY_DATABASE_URI = f"{_DBConfig.db_driver}://{_DBConfig.db_user}:{_DBConfig.db_password}@{_DBConfig.db_host}:{_DBConfig.db_port}/{_DBConfig.db_name}?charset=utf8mb4"

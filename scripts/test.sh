@@ -21,6 +21,8 @@ docker build \
 docker run \
     --name "${TEST_CONTAINER_NAME}" \
     --env-file ".env" \
+    --env DB_INIT_FILE="tests/database/init_db.sql" \
+    --env TEST_MODE=True \
     --interactive \
     --tty \
     "${TEST_IMAGE_NAME}"
