@@ -4,6 +4,9 @@ import dependency_injector.providers as providers
 
 class CoreContainers(containers.DeclarativeContainer):
     import api_service.settings.database_manager as database_manager
+    import api_service.configuration.logger as logger
+
+    logger_singleton = providers.Singleton(logger.Logger().get_logger)
 
     database_singleton = providers.Singleton(database_manager.DatabaseManager, echo=False, pool_recycle=1800)
 
