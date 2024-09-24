@@ -2,6 +2,7 @@ from flask_restful import Api, Resource
 
 from api_service.resources.build_version import BuildVersion
 from api_service.resources.root import Root
+from api_service.resources.user import User
 
 
 def initialize_route(
@@ -11,15 +12,6 @@ def initialize_route(
     url: str,
     resource_kwargs: dict,
 ) -> None:
-    """
-    Initializes routes for specified resource.
-
-    Arguments:
-    - api: Initialized API Flask application
-
-    Returns:
-    - None
-    """
     api.add_resource(
         resource,
         url,
@@ -39,10 +31,10 @@ def initialize_routes(api: Api) -> None:
 
     initialize_route(api=api, resource=Root, endpoint="root", url="/", resource_kwargs={})
 
-    # initialize_route(
-    #     api=api,
-    #     resource=Example,
-    #     endpoint="example",
-    #     url="/examples/<example_id>/example",
-    #     resource_kwargs={},
-    # )
+    initialize_route(
+        api=api,
+        resource=User,
+        endpoint="users",
+        url="/users",
+        resource_kwargs={},
+    )

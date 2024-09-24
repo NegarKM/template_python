@@ -6,9 +6,11 @@ from flask import Flask, Response, request
 from flask_restful import Api
 
 import api_service.configuration.containers as containers
+import api_service.repositories
 import api_service.resources
 from api_service.app.routes import initialize_routes
 from api_service.configuration.swagger import SWAGGER_CONFIG, SWAGGER_TEMPLATE
+from api_service.configuration.config import DBConfig
 
 
 def create_application(application_containers: Any = None) -> Flask:
@@ -20,9 +22,11 @@ def create_application(application_containers: Any = None) -> Flask:
         application_containers.wire(
             packages=[
                 api_service.resources,
+                api_service.repositories,
             ]
         )
 
+    app.config.from_object(DBConfig)
     api = Api(
         app,
         prefix=f"/api/{os.getenv('API_VERSION', 'v1')}",
@@ -32,6 +36,7 @@ def create_application(application_containers: Any = None) -> Flask:
     app.config["SWAGGER"] = SWAGGER_CONFIG
     Swagger(app, template=SWAGGER_TEMPLATE)
 
+    app.database = application_containers.app.database_singleton()
     app.containers = application_containers
 
     initialize_routes(api)
