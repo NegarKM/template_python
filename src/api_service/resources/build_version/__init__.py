@@ -12,12 +12,12 @@ from dependency_injector.wiring import Provide, inject
 
 class BuildVersion(Resource):
     @inject
-    def __init__(self, build_version_service: Any = Provide["services.build_version_service"]) -> None:
-        self.build_version_service = build_version_service
+    def __init__(self, service: Any = Provide["services.build_version_service"]) -> None:
+        self.service = service
 
     def get(self) -> Response:
         response_json: str = BuildVersionGETResponse().dumps(
-            {"build_version": self.build_version_service.get_build_version()},
+            {"build_version": self.service.get_build_version()},
         )
 
         return Response(

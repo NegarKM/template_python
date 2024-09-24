@@ -42,3 +42,35 @@ class RequestBodyValidationError(APIHTTPException):
             error_code=self.error_code,
             causes=causes,
         )
+
+
+class UserNotFound(APIHTTPException):
+    code = 404
+    description = "User Not Found"
+    error_code = "E10300"
+
+    def __init__(self, causes: Any = None):
+        super(UserNotFound, self).__init__(
+            description=self.description,
+            error_code=self.error_code,
+            causes=causes,
+        )
+
+
+class UserAlreadyExists(APIHTTPException):
+    code = 401
+    description = "User Already Exists"
+    error_code = "E10201"
+
+    def __init__(self, causes: Any = None):
+        super(UserAlreadyExists, self).__init__(
+            description=self.description,
+            error_code=self.error_code,
+            causes=causes,
+        )
+
+
+class RepositoryException(Exception):
+    def __init__(self, message: str = None):
+        super().__init__(message)
+        self.message = message
