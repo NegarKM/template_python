@@ -11,10 +11,10 @@ class BaseRepository:
     @inject
     def __init__(self, session: Any) -> None:
         self.session = session
-        self.is_batch_write = False
+        # self.is_batch_write = False
 
     def set_batch_write(self, session: Session = None) -> None:
-        self.is_batch_write = True
+        # self.is_batch_write = True
         if session:
             self.session = session
 
@@ -34,15 +34,15 @@ class BaseRepository:
         except Exception:
             raise RepositoryException()
         finally:
-            if not self.is_batch_write:
-                self.session.close()
+            # if not self.is_batch_write:
+            self.session.close()
 
     def _write_entities(self, action: Callable, option: str) -> Any:
         try:
             action(option)
             self.session.flush()
-            if not self.is_batch_write:
-                self.session.commit()
+            # if not self.is_batch_write:
+            self.session.commit()
 
             if action == self.session.add:
                 return option.id if (option and hasattr(option, "id")) else 0  # type: ignore
@@ -52,8 +52,8 @@ class BaseRepository:
             self.session.rollback()
             raise RepositoryException()
         finally:
-            if not self.is_batch_write:
-                self.session.close()
+            # if not self.is_batch_write:
+            self.session.close()
 
     def get_all_entities(self, stmt: Select) -> List:
         return self._read_entities(stmt, "all")
