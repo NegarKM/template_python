@@ -8,6 +8,7 @@ from marshmallow import ValidationError
 from api_service.common.constants.content_types import ContentTypes
 from api_service.resources.user.schemas import UsersPOSTRequest, UserGETResponse
 from exceptions import InvalidInputError
+from api_service.configuration.resource_decorators import validate_authorization_token
 
 from dependency_injector.wiring import Provide, inject
 
@@ -24,6 +25,7 @@ class User(BaseUser):
         "UserGETResponse": UserGETResponse,
     }
 
+    @validate_authorization_token
     def post(self) -> Response:
         try:
             input_details = UsersPOSTRequest().load(request.get_json())
@@ -37,6 +39,7 @@ class User(BaseUser):
             status=HTTPStatus.CREATED.value,
         )
 
+    @validate_authorization_token
     def get(self) -> Response:
         query_params = dict(request.args)
         response = self.service.get_user(query_params.pop("email"))

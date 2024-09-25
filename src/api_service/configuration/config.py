@@ -6,6 +6,7 @@ from urllib.parse import quote_plus
 class AppConfig(object):
     TEST_MODE: Final = True if os.environ.get("TEST_MODE") == "True" else False
     BUILD_VERSION: Final = os.environ.get("BUILD_VERSION")
+    API_KEY_SECRET: Final = os.environ.get("API_KEY_SECRET")
 
 
 class _DBConfig(object):
