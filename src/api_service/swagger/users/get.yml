@@ -1,0 +1,19 @@
+User GET endpoint retrieves user by email
+---
+tags:
+  - User
+security:
+  - bearer: []
+parameters:
+  - name: email
+    in: query
+    type: string
+    description: user's email address
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: "#/definitions/UserGETResponse"
+  404:
+    description: User Not Found

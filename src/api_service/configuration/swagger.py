@@ -15,11 +15,10 @@ SWAGGER_CONFIG: Dict[str, Any] = {
 
 SWAGGER_TEMPLATE: Dict[str, Any] = {
     "securityDefinitions": {
-        # "basic": {"type": "basic", "in": "header", "name": "Authorization"},
         "bearer": {
-            "type": "API Key",
+            "type": "apiKey",
             "in": "header",
-            "name": "Authentication",
+            "name": "Authorization",
             "description": "---",
         },
     }

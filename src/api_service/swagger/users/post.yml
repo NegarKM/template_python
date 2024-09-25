@@ -1,0 +1,15 @@
+User POST endpoint creates user
+---
+tags:
+  - User
+security:
+  - bearer: []
+parameters:
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/UsersPOSTRequest"
+responses:
+  201:
+    description: CREATED
+    type: string
