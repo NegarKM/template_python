@@ -19,7 +19,8 @@ class UserTableRepository(BaseRepository):
     def get_user_by_email(self, email: str) -> Dict:
         return super().get_entity_if_exist(
             (
-                select(*[getattr(self.user, col) for col in self.user.__table__.columns.keys()]).where(
+                select(*[getattr(self.user, col) for col in self.user.__table__.columns.keys()])
+                .where(
                     func.lower(self.user.email) == email.lower()
                 )
             )
@@ -32,5 +33,10 @@ class UserTableRepository(BaseRepository):
 
     def change_email(self, old_email: str, new_email: str) -> None:
         super().update_entity(
-            (update(self.user).where(func.lower(self.user.email) == old_email.lower()).values(email=new_email.lower()))
+            (update(self.user)
+             .where(
+                (func.lower(self.user.email) == old_email.lower()) &
+                (func.lower(self.user.email) == old_email.lower())
+             )
+             .values(email=new_email.lower()))
         )

@@ -13,10 +13,10 @@ class BaseRepository:
         self.session = session
         # self.is_batch_write = False
 
-    def set_batch_write(self, session: Session = None) -> None:
-        # self.is_batch_write = True
-        if session:
-            self.session = session
+    # def set_batch_write(self, session: Session = None) -> None:
+    #     # self.is_batch_write = True
+    #     if session:
+    #         self.session = session
 
     def rollback(self) -> None:
         self.session.rollback()
