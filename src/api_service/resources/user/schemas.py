@@ -10,5 +10,3 @@ class UsersPOSTRequest(Schema):
 class UserGETResponse(Schema):
     email = String()
     created_at = Date()
-
-
